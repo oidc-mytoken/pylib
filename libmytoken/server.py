@@ -4,6 +4,9 @@ import requests
 
 from .accesstoken import AccessTokenEndpoint
 from .error import MytokenError
+from .revoke import RevocationEndpoint
+from .tokeninfo import TokeninfoEndpoint
+from .transfer import TokenTransferEndpoint
 
 
 class MytokenServer:
@@ -15,11 +18,10 @@ class MytokenServer:
         resp = response.json()
         self.ServerMetadata = resp
         self.AccessToken = AccessTokenEndpoint(resp['access_token_endpoint'])
-        # self.Mytoken = mytoken.MytokenEndpoint(resp['mytoken_endpoint'])
-        # self.Revocation = revocation.RevocationEndpoint(resp['revocation_endpoint'])
-        # self.Tokeninfo = tokeninfo.TokeninfoEndpoint(resp['tokeninfo_endpoint'])
-        # self.Transfer = transfer.TokenTransferEndpoint(resp['token_transfer_endpoint'])
-        # self.UserSettings, err = settings.UserSettingsEndpoint(resp['usersettings_endpoint'])
+        # self.Mytoken = MytokenEndpoint(resp['mytoken_endpoint'])
+        self.Revocation = RevocationEndpoint(resp['revocation_endpoint'])
+        self.Tokeninfo = TokeninfoEndpoint(resp['tokeninfo_endpoint'])
+        self.Transfer = TokenTransferEndpoint(resp['token_transfer_endpoint'])
 
 
 cachedMytokenServers = {}
